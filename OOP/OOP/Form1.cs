@@ -16,24 +16,45 @@ namespace OOP
         {
             InitializeComponent();
         }
-        Atlet atlet;
+
+        Auto auto;
+
         private void button1_Click(object sender, EventArgs e)
         {
-            atlet = new Atlet(textBox1.Text);
-            label2.Text = "Unava: " + atlet.ZjistitUnavu();
-            label3.Text = atlet.Jmeno;
-        }
+            try
+            {
+                auto = new Auto(textBox1.Text, float.Parse(textBox2.Text), int.Parse(textBox3.Text), TimeSpan.Parse(textBox4.Text));
+                AktualizujData();
+                groupBox2.Enabled = true;
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            atlet.Behej((int)numericUpDown1.Value);
-            label2.Text = "Unava: " + atlet.ZjistitUnavu();
+            } catch
+            {
+                MessageBox.Show("Špatný formát vstupu!!!");
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            atlet.Spi((int)numericUpDown2.Value);
-            label2.Text = "Unava: " + atlet.ZjistitUnavu();
+            auto.Zastav((new Random()).Next(1,2000));
+            AktualizujData();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            auto.Rozjed();
+            AktualizujData();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(auto.ToString(),"Auto",MessageBoxButtons.OK,MessageBoxIcon.Information);
+        }
+
+        void AktualizujData()
+        {
+            label6.Text = "Jede auto: " + auto.Jede;
+            label7.Text = "Najeté km: " + auto.VratUjeteKm();
+            label8.Text = "Spotřeba: " + auto.CelkovaSpotreba();
         }
     }
 }
